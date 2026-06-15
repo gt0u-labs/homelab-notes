@@ -1,149 +1,94 @@
 # Linux Services and Logs
 
-## Objective
+## Goal
 
-Document basic commands used to inspect Linux services and logs during troubleshooting.
+Document basic commands for checking Linux services and logs.
 
-Services and logs are important because many server problems are related to failed processes, crashed services or configuration errors.
+I already understood commands like `start`, `stop`, `restart` and `status`, but I had not used `journalctl` much before.
 
-## Basic Concepts
+## Environment
 
-A Linux service is a background process managed by the system.
+* WSL Ubuntu
+* Windows Terminal
+* VS Code
 
-Examples:
-
-- SSH server
-- web server
-- database service
-- Docker service
-
-Logs are records of what happened on the system or inside a service.
-
-## Useful Commands
-
-### Check systemd version
+## Commands Used
 
 ```bash
 systemctl --version
-```
-
-### List running services
-
-```bash
 systemctl list-units --type=service --state=running
-```
-
-### Check the status of a service
-
-```bash
 systemctl status service-name
-```
-
-Example:
-
-```bash
-systemctl status ssh
-```
-
-### Start a service
-
-```bash
 sudo systemctl start service-name
-```
-
-### Stop a service
-
-```bash
 sudo systemctl stop service-name
-```
-
-### Restart a service
-
-```bash
 sudo systemctl restart service-name
-```
-
-### Enable a service on boot
-
-```bash
 sudo systemctl enable service-name
-```
-
-### View recent system logs
-
-```bash
 journalctl -xe
-```
-
-### View logs for a specific service
-
-```bash
 journalctl -u service-name
+journalctl -u service-name --since "1 hour ago"
 ```
 
-Example:
+## Service Commands
 
-```bash
-journalctl -u ssh
+Basic meaning:
+
+```text
+start   = start the service now
+stop    = stop the service now
+restart = restart the service now
+status  = check service status
+enable  = make the service start automatically on boot
 ```
-
-### View logs from the last hour
-
-```bash
-journalctl --since "1 hour ago"
-```
-
-## Basic Troubleshooting Flow
-
-When a service is not working:
-
-1. Check if the service exists.
-2. Check if the service is running.
-3. Check service status.
-4. Read the logs.
-5. Look for errors.
-6. Do not restart production services without permission.
-
-## Example Investigation
-
-If SSH is not working, I would check:
-
-```bash
-systemctl status ssh
-journalctl -u ssh --since "1 hour ago"
-```
-
-Then I would look for:
-
-- failed login attempts
-- configuration errors
-- service not running
-- port or firewall issues
-
-## Important Note
-
-Before restarting a service, always understand the possible impact.
-
-Restarting a service may disconnect users or interrupt active processes.
-
-## What I Learned
-
-Services and logs are one of the first places to check when troubleshooting Linux systems.
-
-A good troubleshooting process starts by checking status, reading logs and understanding the impact before making changes.
-
-## Notes About `enable`
-
-`start` starts a service immediately.
-
-`enable` makes a service start automatically when the system boots.
 
 Example:
 
 ```bash
 sudo systemctl start ssh
 sudo systemctl enable ssh
+```
 
+`start` runs the service now.
+
+`enable` makes it start automatically after reboot.
+
+## Logs
+
+`journalctl` is used to read system logs.
+
+Useful examples:
+
+```bash
 journalctl -xe
 journalctl -u ssh
 journalctl -u ssh --since "1 hour ago"
+```
+
+## Basic Troubleshooting Flow
+
+If a service is not working, I would check:
+
+```text
+1. Is the service installed?
+2. Is it running?
+3. What does systemctl status show?
+4. What do the logs show?
+5. Is it safe to restart it?
+```
+
+Example:
+
+```bash
+systemctl status ssh
+journalctl -u ssh --since "1 hour ago"
+```
+
+## Important Note
+
+In a real environment, restarting a service can affect users or running processes.
+
+I should not restart production services without understanding the impact or asking first.
+
+## What I Learned
+
+The most useful new command for me here was `journalctl`.
+
+Instead of guessing why something failed, I can check the service status and read logs first.

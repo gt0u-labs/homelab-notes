@@ -1,20 +1,31 @@
 # Linux Users and Permissions
 
-## Objective
+## Goal
 
-Document basic Linux user and permission concepts.
+Document basic Linux user and permission commands.
 
-This note focuses on simple commands I have used while working with Linux files and scripts.
+I already used `chmod +x` before to make scripts executable, but I wanted to understand numeric permissions like `644`, `755` and `777` better.
 
-## Basic Concepts
+## Environment
 
-Linux files have permissions that control who can:
+* WSL Ubuntu
+* Windows Terminal
+* VS Code
 
-- read a file
-- write/edit a file
-- execute a file
+## Commands Used
 
-The main permission letters are:
+```bash
+whoami
+id
+ls -l
+chmod +x script.sh
+chmod 644 file.txt
+chmod 755 script.sh
+```
+
+## Notes
+
+Linux permissions control who can read, write or execute a file.
 
 ```text
 r = read
@@ -22,66 +33,13 @@ w = write
 x = execute
 ```
 
-## Useful Commands
-
-### Check current user
-
-```bash
-whoami
-```
-
-Shows the current Linux user.
-
-### Check user ID and groups
-
-```bash
-id
-```
-
-Shows the current user's UID, GID and groups.
-
-### List files with permissions
-
-```bash
-ls -l
-```
-
-Shows files with permissions, owner and group.
-
-Example output:
+They apply to:
 
 ```text
--rw-r--r-- 1 user user 120 file.txt
--rwxr-xr-x 1 user user 200 script.sh
+owner / group / others
 ```
 
-## Making a Script Executable
-
-I have used this command to make scripts executable:
-
-```bash
-chmod +x script.sh
-```
-
-After that, the script can be executed with:
-
-```bash
-./script.sh
-```
-
-## Numeric Permissions
-
-Linux can also use numeric permissions such as:
-
-```text
-644
-755
-777
-```
-
-I am documenting these as part of my learning process.
-
-Basic idea:
+The numeric values are:
 
 ```text
 4 = read
@@ -92,19 +50,33 @@ Basic idea:
 Examples:
 
 ```text
-644 = owner can read/write, others can read
-755 = owner can read/write/execute, others can read/execute
+644 = owner can read/write, group and others can read
+755 = owner can read/write/execute, group and others can read/execute
 777 = everyone can read/write/execute
+```
+
+## What I Already Knew
+
+I already knew how to use:
+
+```bash
+chmod +x script.sh
+```
+
+This makes a script executable so it can be run with:
+
+```bash
+./script.sh
 ```
 
 ## Important Note
 
-`chmod 777` should usually be avoided because it gives everyone full permissions.
+`chmod 777` should not be used as a normal fix.
 
-It may fix a problem temporarily, but it is not a safe default.
+It can make permission problems disappear, but it gives too much access and is not safe by default.
 
 ## What I Learned
 
-I already knew how to use `chmod +x` to make scripts executable.
+I understood the basic logic behind numeric permissions.
 
-Now I am learning how Linux numeric permissions work and why permissions like `644`, `755` and `777` are different.
+I still need to practice this more with real files and folders, but now `644`, `755` and `777` make more sense than before.
