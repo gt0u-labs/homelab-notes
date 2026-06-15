@@ -131,3 +131,19 @@ Restarting a service may disconnect users or interrupt active processes.
 Services and logs are one of the first places to check when troubleshooting Linux systems.
 
 A good troubleshooting process starts by checking status, reading logs and understanding the impact before making changes.
+
+## Notes About `enable`
+
+`start` starts a service immediately.
+
+`enable` makes a service start automatically when the system boots.
+
+Example:
+
+```bash
+sudo systemctl start ssh
+sudo systemctl enable ssh
+
+journalctl -xe
+journalctl -u ssh
+journalctl -u ssh --since "1 hour ago"
