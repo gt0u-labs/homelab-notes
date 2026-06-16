@@ -1,0 +1,7 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: gt0u-compose-nginx
+    ports:
+      - "8081:80"
+    restart: unless-stopped
