@@ -8,6 +8,8 @@ This is not advanced, but it is useful as a first troubleshooting step.
 
 ## Environment
 
+*(at the time of writing — see [main README](../README.md) for the current lab setup)*
+
 * Windows 11 Pro
 * WSL Ubuntu
 * Windows Terminal
