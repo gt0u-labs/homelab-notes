@@ -2,12 +2,15 @@
 
 Personal infrastructure, Linux, virtualization and self-hosting experiments — documented while building practical systems administration, networking and security skills.
 
+> **Status:** this lab ran from 2025 to 2026. The hardware has since been repurposed — this repository documents the setup as it was built, including configuration, monitoring and troubleshooting.
+
 🌐 Full portfolio: [gt0u-labs.github.io](https://gt0u-labs.github.io)
 
 ## 📚 Topics
 
 * Proxmox VE virtualization
-* GPU passthrough & local LLM inference (Ollama, Open WebUI)
+* GPU passthrough (VFIO) troubleshooting
+* Local LLM inference (Ollama, Open WebUI)
 * Ubuntu Server administration
 * Docker & Docker Compose
 * Centralized log monitoring (Grafana, Loki, Promtail)
@@ -18,7 +21,7 @@ Personal infrastructure, Linux, virtualization and self-hosting experiments — 
 
 ---
 
-## 🛠️ Current Lab Setup
+## 🛠️ Lab Setup (2025–2026)
 
 **Node 1 — Application & Monitoring Server**
 * Ubuntu Server (headless, SSH-managed)
@@ -28,17 +31,17 @@ Personal infrastructure, Linux, virtualization and self-hosting experiments — 
 
 **Node 2 — Virtualization Host**
 * Proxmox VE (bare-metal hypervisor)
-* Ubuntu Server VM — general-purpose target/test environment
-* Kali Linux VM — network reconnaissance and security practice
-* GPU passthrough configured to a dedicated VM for local LLM inference (Ollama + Open WebUI via Docker) — diagnosed and resolved a PCIe device-visibility issue at the host BIOS/IOMMU level
+* Ubuntu Server VM — test target and local LLM inference (Ollama + Open WebUI via Docker)
+* Kali Linux VM — network reconnaissance and security practice, run on a physical monitor via GPU passthrough because the Proxmox web console was too laggy for GUI tools
+* GPU passthrough troubleshooting — diagnosed a PCI ROM signature error through `dmesg` and resolved it with a card-specific VBIOS → [full write-up](https://github.com/gt0u-labs/security-learning-log/blob/main/writeups/proxmox-gpu-passthrough.md)
 
-Both nodes are managed remotely over SSH and the Proxmox web interface — no physical keyboard/monitor required for day-to-day operation.
+Both nodes were managed remotely over SSH and the Proxmox web interface.
 
 ---
 
 ## 📖 Notes & Documentation
 
-This repository contains practical notes, configurations and learning logs from hands-on infrastructure work. The goal is to progressively build real-world skills in:
+This repository contains practical notes, configurations and learning logs from hands-on infrastructure work, covering:
 
 * Linux system administration
 * Virtualization and VM lifecycle management
@@ -50,15 +53,17 @@ This repository contains practical notes, configurations and learning logs from 
 
 ---
 
-## 🚀 Current Focus
-
-Currently learning and practicing:
+## 🧪 What the lab was used for
 
 * Proxmox VE administration (storage, networking, VM provisioning)
 * Log analysis and dashboard building in Grafana
 * Nmap-based network reconnaissance in a controlled lab
 * Running and comparing local LLMs (Hermes3, Qwen2.5) for agent tooling
-* CompTIA Network+ fundamentals
+
+## 🚀 Current Focus
+
+* CompTIA Network+
+* Defensive security training → [security-learning-log](https://github.com/gt0u-labs/security-learning-log)
 
 ---
 
@@ -66,4 +71,4 @@ Currently learning and practicing:
 
 Learning by building.
 
-Every project here is a hands-on experiment — set up, broken on purpose, fixed, and documented — focused on understanding how real systems behave outside of tutorials.
+Every project here was a hands-on experiment — set up, broken on purpose, fixed, and documented — focused on understanding how real systems behave outside of tutorials.
