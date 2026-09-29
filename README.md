@@ -1,74 +1,129 @@
 # 🏠 homelab-notes
 
-Personal infrastructure, Linux, virtualization and self-hosting experiments — documented while building practical systems administration, networking and security skills.
+### Linux · Proxmox VE · Docker · Monitoring · Networking · Troubleshooting
 
-> **Status:** this lab ran from 2025 to 2026. The hardware has since been repurposed — this repository documents the setup as it was built, including configuration, monitoring and troubleshooting.
+Hands-on infrastructure lab used to practice Linux administration, virtualization,
+containers, monitoring, networking and systematic troubleshooting.
 
-🌐 Full portfolio: [gt0u-labs.github.io](https://gt0u-labs.github.io)
+> **Status:** the original two-node lab ran from 2025 to 2026.  
+> The hardware has since been repurposed, but the setup, projects and troubleshooting
+> work remain documented here.
 
-## 📚 Topics
-
-* Proxmox VE virtualization
-* GPU passthrough (VFIO) troubleshooting
-* Local LLM inference (Ollama, Open WebUI)
-* Ubuntu Server administration
-* Docker & Docker Compose
-* Centralized log monitoring (Grafana, Loki, Promtail)
-* Network reconnaissance (Nmap, Kali Linux)
-* SSH remote management
-* Reverse proxies & tunneling (Tailscale)
-* Incident simulation & recovery
+🌐 [Portfolio](https://gt0u-labs.github.io/) ·
+🔐 [Security learning log](https://github.com/gt0u-labs/security-learning-log)
 
 ---
 
-## 🛠️ Lab Setup (2025–2026)
+## 🧭 Lab Overview
 
-**Node 1 — Application & Monitoring Server**
-* Ubuntu Server (headless, SSH-managed)
-* Docker & Docker Compose
-* Grafana + Loki + Promtail — centralized log monitoring stack
-* Uptime Kuma — service availability monitoring
+The lab consisted of two physical nodes managed remotely through SSH and the
+Proxmox web interface.
 
-**Node 2 — Virtualization Host**
-* Proxmox VE (bare-metal hypervisor)
-* Ubuntu Server VM — test target and local LLM inference (Ollama + Open WebUI via Docker)
-* Kali Linux VM — network reconnaissance and security practice, run on a physical monitor via GPU passthrough because the Proxmox web console was too laggy for GUI tools
-* GPU passthrough troubleshooting — diagnosed a PCI ROM signature error through `dmesg` and resolved it with a card-specific VBIOS → [full write-up](https://github.com/gt0u-labs/security-learning-log/blob/main/writeups/proxmox-gpu-passthrough.md)
+### Node 1 — Ubuntu Server
 
-Both nodes were managed remotely over SSH and the Proxmox web interface.
+**Role:** applications, logging and monitoring
+
+- Ubuntu Server
+- Headless administration over SSH
+- Docker
+- Docker Compose
+- Grafana
+- Loki
+- Promtail
+- Uptime Kuma
+- Nginx
+
+Used for containerized services, centralized logging, monitoring and
+infrastructure experiments.
+
+### Node 2 — Proxmox VE
+
+**Role:** virtualization and security lab
+
+- Proxmox VE bare-metal hypervisor
+- VM provisioning
+- LVM storage
+- Virtual networking
+- PCI / GPU passthrough
+- USB passthrough
+
+Virtual machines included:
+
+**Kali Linux**
+- Network reconnaissance
+- Security practice
+- Nmap
+- GPU passthrough to a physical monitor
+
+**Ubuntu Server**
+- Infrastructure testing
+- Docker
+- Local LLM inference with Ollama + Open WebUI
 
 ---
 
-## 📖 Notes & Documentation
+## 🔧 Selected Projects
 
-This repository contains practical notes, configurations and learning logs from hands-on infrastructure work, covering:
+### Service Monitoring & Recovery
 
-* Linux system administration
-* Virtualization and VM lifecycle management
-* GPU passthrough and hardware-level virtualization troubleshooting
-* Container workflows
-* Centralized logging and observability
-* Basic network security practices
-* Remote infrastructure management
+A small Docker Compose environment using Nginx and Uptime Kuma.
 
----
+The Nginx service was stopped intentionally to simulate an outage.
+Uptime Kuma detected the failure, the service was restored and recovery was
+verified through monitoring and direct HTTP checks.
 
-## 🧪 What the lab was used for
-
-* Proxmox VE administration (storage, networking, VM provisioning)
-* Log analysis and dashboard building in Grafana
-* Nmap-based network reconnaissance in a controlled lab
-* Running and comparing local LLMs (Hermes3, Qwen2.5) for agent tooling
-
-## 🚀 Current Focus
-
-* CompTIA Network+
-* Defensive security training → [security-learning-log](https://github.com/gt0u-labs/security-learning-log)
+→ [View project](projects/service-monitoring-incident)
 
 ---
 
-## ⚡ Philosophy
+### Docker Compose — Nginx
 
-Learning by building.
+Practical Docker Compose exercises covering:
 
-Every project here was a hands-on experiment — set up, broken on purpose, fixed, and documented — focused on understanding how real systems behave outside of tutorials.
+- Container definitions
+- Port mapping
+- Service lifecycle
+- Docker networking
+- Nginx deployment
+
+→ [View project](projects/docker-compose-nginx)
+
+---
+
+### First Nginx Container
+
+Early Docker exercise used to understand the basic container workflow before the
+lab moved onto more complex Compose-based infrastructure.
+
+→ [View project](projects/docker-nginx-first-service)
+
+---
+
+## 🧰 Support Playbook
+
+A small first-response troubleshooting runbook built from problems encountered
+while running the lab.
+
+Current scenarios include:
+
+- Service outages
+- SSH connectivity problems
+- Disk space issues
+- Memory/resource problems
+- Docker storage usage
+- Log-driven troubleshooting
+
+The basic approach is:
+
+```text
+observe symptoms
+      ↓
+collect evidence
+      ↓
+identify the failing layer
+      ↓
+apply the smallest safe fix
+      ↓
+verify recovery
+      ↓
+document the result
